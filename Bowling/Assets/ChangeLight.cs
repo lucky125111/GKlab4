@@ -2,29 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChangeLight : MonoBehaviour {
+public class ChangeLight : MonoBehaviour
+{
 
-    public Light BallLight { get; set; }
-    public Light PinsLight { get; set; }
-    public Light PointStraightUp { get; set; }
-    public Light PointRotated { get; set; }
+    public Light BallLight;
+    public Light PinsLight;
+    public Light PointStraightUp;
+    public Light PointRotated;
 
-	// Use this for initialization
-	void Start () {
-	    BallLight = GameObject.Find("BallLight").GetComponent<Light>();
-	    PinsLight = GameObject.Find("PinsLight").GetComponent<Light>();
-	    PointStraightUp = GameObject.Find("PointStraightUp").GetComponent<Light>();
-	    PointRotated = GameObject.Find("PointRotated").GetComponent<Light>();
 
+    // Use this for initialization
+    void Start () {
 	    BallLight.enabled = true;
 	    PinsLight.enabled = true;
 	    PointStraightUp.enabled = false;
 	    PointRotated.enabled = false;
 
-	}
+        //przekazac swiatlo
+        //Shader.SetGlobalVector("_lightPos", );
+    }
 
     // Update is called once per frame
-    void FixedUpdate () {
+    void Update () {
         if (Input.GetKey(KeyCode.Q))
         {
             BallLight.enabled = !BallLight.enabled;

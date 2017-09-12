@@ -4,20 +4,14 @@ namespace Assets
 {
     class ChangeCamera : MonoBehaviour
     {
-        public Camera SideCamera { get; set; }
-        public Camera BackCamera { get; set; }
-        public Camera FollowingCamera { get; set; }
-        public Camera TopCamera { get; set; }
-        public Camera MovingCamera { get; set; }
+        public Camera SideCamera;
+        public Camera BackCamera;
+        public Camera FollowingCamera;
+        public Camera TopCamera;
+        public Camera MovingCamera;
 
         void Start()
         {
-            SideCamera = GameObject.Find("SideCamera").GetComponent<Camera>();
-            BackCamera = GameObject.Find("BackCamera").GetComponent<Camera>();
-            FollowingCamera = GameObject.Find("FollowingCamera").GetComponent<Camera>();
-            TopCamera = GameObject.Find("TopCamera").GetComponent<Camera>();
-            MovingCamera = GameObject.Find("MovingCamera").GetComponent<Camera>();
-
             SideCamera.enabled = true;
             BackCamera.enabled = false;
             FollowingCamera.enabled = false;

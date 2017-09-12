@@ -7,7 +7,6 @@ public class FollowBallCamera : MonoBehaviour {
 
     void Start()
     {
-       BowlingBall = GameObject.FindWithTag("Player");
        Offset = transform.position - BowlingBall.transform.position;
     }
 

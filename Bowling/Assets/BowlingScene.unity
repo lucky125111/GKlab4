@@ -1137,6 +1137,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc12e471e52bd8742b3ed6dd0144cb64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SideCamera: {fileID: 680948491}
+  BackCamera: {fileID: 1082761582}
+  FollowingCamera: {fileID: 1363786555}
+  TopCamera: {fileID: 1901161620}
+  MovingCamera: {fileID: 1685728686}
 --- !u!114 &1006749252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1652,7 +1657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f40ec96de387b9d4ab8c84d1714e8fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BowlingBall: {fileID: 0}
+  BowlingBall: {fileID: 890292063}
 --- !u!92 &1363786553
 Behaviour:
   m_ObjectHideFlags: 0
@@ -2139,6 +2144,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 624234bf66f4f2b4bbf1dede0149eb7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BallLight: {fileID: 1050078623}
+  PinsLight: {fileID: 178538756}
+  PointStraightUp: {fileID: 1157878761}
+  PointRotated: {fileID: 1710374870}
 --- !u!4 &1658530086
 Transform:
   m_ObjectHideFlags: 0

@@ -13,7 +13,6 @@ public class Ball : MonoBehaviour
         GameStatus.IsSetup = true;
         preFinish = false;
         initialPosition = transform.localPosition;
-        preFinish=false;
     }
 
     void FixedUpdate()
