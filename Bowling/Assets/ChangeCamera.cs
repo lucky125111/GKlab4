@@ -8,6 +8,7 @@ namespace Assets
         public Camera BackCamera { get; set; }
         public Camera FollowingCamera { get; set; }
         public Camera TopCamera { get; set; }
+        public Camera MovingCamera { get; set; }
 
         void Start()
         {
@@ -15,11 +16,13 @@ namespace Assets
             BackCamera = GameObject.Find("BackCamera").GetComponent<Camera>();
             FollowingCamera = GameObject.Find("FollowingCamera").GetComponent<Camera>();
             TopCamera = GameObject.Find("TopCamera").GetComponent<Camera>();
+            MovingCamera = GameObject.Find("MovingCamera").GetComponent<Camera>();
 
             SideCamera.enabled = true;
             BackCamera.enabled = false;
             FollowingCamera.enabled = false;
             TopCamera.enabled = false;
+            MovingCamera.enabled = false;
         }
 
         void Update()
@@ -30,6 +33,7 @@ namespace Assets
                 BackCamera.enabled = false;
                 FollowingCamera.enabled = false;
                 TopCamera.enabled = false;
+                MovingCamera.enabled = false;
             }
             if (Input.GetKey(KeyCode.Alpha2))
             {
@@ -37,6 +41,7 @@ namespace Assets
                 BackCamera.enabled = true;
                 FollowingCamera.enabled = false;
                 TopCamera.enabled = false;
+                MovingCamera.enabled = false;
             }
             if (Input.GetKey(KeyCode.Alpha3))
             {
@@ -44,6 +49,7 @@ namespace Assets
                 BackCamera.enabled = false;
                 FollowingCamera.enabled = true;
                 TopCamera.enabled = false;
+                MovingCamera.enabled = false;
             }
             if (Input.GetKey(KeyCode.Alpha4))
             {
@@ -51,8 +57,16 @@ namespace Assets
                 BackCamera.enabled = false;
                 FollowingCamera.enabled = false;
                 TopCamera.enabled = true;
+                MovingCamera.enabled = false;
             }
-
+            if (Input.GetKey(KeyCode.Alpha5))
+            {
+                SideCamera.enabled = false;
+                BackCamera.enabled = false;
+                FollowingCamera.enabled = false;
+                TopCamera.enabled = false;
+                MovingCamera.enabled = true;
+            }
 
         }
     }
