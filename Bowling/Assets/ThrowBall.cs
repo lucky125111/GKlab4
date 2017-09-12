@@ -1,59 +1,50 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets;
 using UnityEngine;
 
-public class ThrowBall : MonoBehaviour {
-
-    private Rigidbody _rb { get; set; }
-    private bool Finished { get; set; }
-    public Vector3 InitialPosition { get; set; }
-    public Quaternion InitialRoatetion { get; set; }
+public class ThrowBall : MonoBehaviour
+{
+    private Rigidbody Rigidbody { get; set; }
+    private Vector3 initialPosition { get; set; }
+    public bool preFinish { get; set; }
     void Start()
     {
-        _rb = GetComponent<Rigidbody>();
-        Finished = false;
-        InitialPosition = transform.position;
-        InitialRoatetion = transform.rotation;
-        Debug.Log(InitialPosition);
-        Debug.Log(InitialRoatetion);
-
+        Rigidbody = GetComponent<Rigidbody>();
+        //Rigidbody.detectCollisions = true;
+        GameStatus.IsFinished = false;
+        initialPosition = transform.localPosition;
+        preFinish=false;
     }
 
-    //onclick
-    void Update()
+    void FixedUpdate()
     {
-        if (Input.GetKeyUp(KeyCode.A))
+        if(Input.GetKey(KeyCode.Space) && !preFinish && !GameStatus.IsFinished)
+            Rigidbody.AddForce(Vector3.forward * 1000);
+
+        if (transform.localPosition.y < 0.9)
         {
-            Time.timeScale = 1;
-            transform.SetPositionAndRotation(transform.position + Vector3.right, InitialRoatetion);
+            preFinish = true;
         }
 
-        if (Input.GetKeyUp(KeyCode.D))
-            transform.SetPositionAndRotation(transform.position + Vector3.left, InitialRoatetion);
-
-        if (Input.GetKeyUp(KeyCode.Space) && !Finished)
+        if (Input.GetKey(KeyCode.Space) && preFinish)
         {
-            Debug.Log("ball thrown");
-            _rb.velocity = Vector3.forward * 10;
+            GameStatus.IsFinished = true;
+            Debug.Log("game finished");
+            //wait for spacja
+            ResetPosition();
+            preFinish = false;
+
         }
-
-        if (Input.GetKeyUp(KeyCode.R) && Finished)
-        {
-            Debug.Log("resetting");
-            transform.position = InitialPosition;
-            Finished = false;
-        }
-
-        if (transform.position.y < 0.0f)
-        {
-            Finished = true;
-            _rb.velocity = Vector3.zero;
-            _rb.rotation = InitialRoatetion;
-            Debug.Log("fnished");
-        }
-
-        Debug.Log(_rb.velocity);
-        Debug.Log(transform.position);
-
     }
+
+    private void ResetPosition()
+    {
+        transform.localPosition = initialPosition;
+        transform.rotation = Quaternion.identity;
+        Rigidbody.velocity = Vector3.zero;
+        Rigidbody.angularVelocity = Vector3.zero;
+        gameObject.SetActive(true);
+    }
+    
 }
