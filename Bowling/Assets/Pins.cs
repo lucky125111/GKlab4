@@ -1,33 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Collections.Generic;
 using Assets;
 using UnityEngine;
 
-public class Pins : MonoBehaviour {
+public class Pins : MonoBehaviour
+{
+    public List<Vector3> InitialPinsPosition { get; set; }
 
-    public List<Vector3> PinsPosition { get; set; }
-
-	// Use this for initialization
-	void Start () {
-        PinsPosition = new List<Vector3>();
-        for(int i= 0; i < transform.childCount; i++)
-        {
-            PinsPosition.Add(transform.GetChild(i).localPosition);
-        }
-
+    // Use this for initialization
+    private void Start()
+    {
+        InitialPinsPosition = new List<Vector3>();
+        for (var i = 0; i < transform.childCount; i++)
+            InitialPinsPosition.Add(transform.GetChild(i).localPosition);
     }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
-	    if (GameStatus.IsFinished)
-	    {
-	        int collapsedCount = 0;
-	        for (int i = 0; i < transform.childCount; i++)
-	        {
-	            if (PinsPosition[i] != transform.GetChild(i).localPosition)
-	                collapsedCount++;
+
+    // Update is called once per frame
+    private void FixedUpdate()
+    {
+        if (GameStatus.IsFinished)
+        {
+            var collapsedCount = 0;
+            for (var i = 0; i < transform.childCount; i++)
+            {
+                if (InitialPinsPosition[i] != transform.GetChild(i).localPosition)
+                    collapsedCount++;
 
 
                 ResetPositions(i);
@@ -36,17 +32,14 @@ public class Pins : MonoBehaviour {
                     rb.velocity = Vector3.zero;
                     rb.angularVelocity = Vector3.zero;
                 }
-
             }
-            Debug.Log(collapsedCount);
-	        GameStatus.IsFinished = false;
-	    }
+            GameStatus.IsFinished = false;
+        }
     }
 
     private void ResetPositions(int i)
     {
-
-        transform.GetChild(i).localPosition = PinsPosition[i];
+        transform.GetChild(i).localPosition = InitialPinsPosition[i];
         transform.GetChild(i).localRotation = Quaternion.identity;
     }
 }
