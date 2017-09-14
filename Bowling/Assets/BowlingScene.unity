@@ -150,6 +150,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m1: {fileID: 2100000, guid: e25c7b03995eb0544922060dca539f39, type: 2}
   m2: {fileID: 2100000, guid: 088bbf663d4880d43a94234d19b7e824, type: 2}
+  ConstPhong: {fileID: 4800000, guid: c03d3c7c493568e4f923e024143c029a, type: 3}
+  ConstBlinn: {fileID: 4800000, guid: 7bacb23b347a892428b958e284da0378, type: 3}
+  GourardPhong: {fileID: 4800000, guid: 7b1d5f9b5d234e84f8dedc069cfc6814, type: 3}
+  GourardBlinn: {fileID: 4800000, guid: edcaa88d9eee14a488d9570dc9fa0edb, type: 3}
+  Phong: {fileID: 4800000, guid: a8626e762132a11418eb603f33d9cefb, type: 3}
+  PhongBlinn: {fileID: 4800000, guid: 5202d8ff9de7f3e4ea57768e601e4f8d, type: 3}
+  Static: {fileID: 4800000, guid: 3fb5ec89f6e6b954cbd0d09cddad088c, type: 3}
+  Triangle: {fileID: 4800000, guid: da753e75551c7394d9327246bc247340, type: 3}
 --- !u!1 &101113949
 GameObject:
   m_ObjectHideFlags: 0
