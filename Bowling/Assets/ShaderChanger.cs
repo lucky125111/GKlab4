@@ -16,14 +16,18 @@ public class ShaderChanger : MonoBehaviour
     public Shader PhongBlinn;
     public Shader Static;
     public Shader Triangle;
+
+    public GameObject Collection;
+
     // Use this for initialization
     void Start () {
-		
-	}
+        Collection.SetActive(false);
+    }
 	
 	// Update is called once per frame
 	void Update () {
-	    if (Input.GetKey(KeyCode.Q))
+
+        if (Input.GetKey(KeyCode.Q))
 	    {
 	        m1.SetFloat("_Shininess", 3);
 	        m2.SetFloat("_Shininess", 3);
