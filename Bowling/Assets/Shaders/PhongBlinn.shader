@@ -1,14 +1,4 @@
-﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
-// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
-
-// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
-// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
-
-// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
-// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-Shader "Custom/PhongBlinn"
+﻿Shader "Custom/PhongBlinn"
 {
 	Properties
 	{
@@ -27,65 +17,57 @@ Shader "Custom/PhongBlinn"
 #include "UnityCG.cginc"
 
 
-	uniform float4 _Color;
+		uniform float4 _Color;
 	uniform float4 _SpecColor;
 	uniform float _Shininess;
 
 	uniform float4 _LightColor0;
 
-	struct vertexInput {
-		float4 vertex : POSITION;
-		float3 normal : NORMAL;
+	struct appdata {
+		float4 pos : POSITION;
+		float3 norm : NORMAL;
 	};
-	struct vertexOutput {
+	struct v2f {
 		float4 pos : SV_POSITION;
-		float4 col : COLOR;
+		float3 norm : NORMAL;
+		float4 p : TEXCOORD0;
+		//float4 pos1;
 	};
 
-	vertexOutput vert(vertexInput input)
+	v2f vert(appdata v)
 	{
-		vertexOutput output;
+		v2f output;
 
-		float4x4 modelMatrix = unity_ObjectToWorld;
-		float3x3 modelMatrixInverse = unity_WorldToObject;
-		float3 normalDirection = normalize(
-			mul(input.normal, modelMatrixInverse));
-		float3 viewDirection = normalize(_WorldSpaceCameraPos
-			- mul(unity_ObjectToWorld, input.vertex).xyz);
-		float3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
+		output.norm = v.norm;
 
-		float3 ambientLighting =
-			unity_AmbientSky.rgb * _Color.rgb;
+		output.pos = UnityObjectToClipPos(v.pos);
 
-		//Idiffuse = Kd * Ilight * cos ^ shine  (color to diffusife material)
-		float3 diffuseReflection = _LightColor0.rgb * _Color.rgb
-			* max(0.0, dot(normalDirection, lightDirection));
-
-		//Ispecular = Ks * Ilight * cos()	(spec color)
-		//vector r (z wykladu mirror reflectance direction)
-		float3 halfVector = normalize(_WorldSpaceLightPos0.xyz + _WorldSpaceCameraPos
-			- mul(unity_ObjectToWorld, input.vertex).xyz);
-
-		//float3 tmp = dot(normalDirection, halfVector);
-		float3 tmp = dot(normalDirection, halfVector);
-
-		// z wykladu v * r czyli v - unit vecgtor w strone ogladacza, r - z punktu po
-
-		float3 specularReflection = _LightColor0.rgb * _SpecColor.rgb * pow(max(0.0, tmp), _Shininess);
-
-		output.col = float4(ambientLighting + diffuseReflection
-			+ specularReflection, 1.0);
-
-
-		output.pos = UnityObjectToClipPos(input.vertex);
-
+		output.p = v.pos;
 
 		return output;
 	}
 
-	float4 frag(vertexOutput input) : COLOR
+	float4 frag(v2f v) : COLOR
 	{
-		return input.col;
+		float4x4 modelMatrix = unity_ObjectToWorld;
+		float3x3 modelMatrixInverse = unity_WorldToObject;
+
+		float3 normalDirection = normalize(mul(v.norm, modelMatrixInverse));
+		float3 viewDirection = normalize(_WorldSpaceCameraPos - mul(modelMatrix, v.p).xyz);
+		float3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
+		//ambientLighting
+		float3 ambientLighting = unity_AmbientSky.rgb * _Color.rgb;
+
+		//diffuseReflection
+		float3 diffuseReflection = _LightColor0.rgb * _Color.rgb * (max(0.0, dot(lightDirection, normalDirection)));
+
+		//specularReflection
+		float3 h = normalize(lightDirection + viewDirection);
+		float3 nh = max(0.0, dot(normalDirection, h));
+
+		float3 specularReflection = _LightColor0.rgb * _SpecColor.rgb * pow(nh, _Shininess);
+
+		return float4(ambientLighting + diffuseReflection + specularReflection, 1.0);
 	}
 		ENDCG
 	}
