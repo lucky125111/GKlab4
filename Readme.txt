@@ -8,5 +8,13 @@ a,d - ruch kula prawo lewo
 5 - ta ktora mozna ruszac poprzed
 	strzalki - ruch normalny
 	strzalki i przycisniety lewy przycisk myszy - rotacja
-3.Swiatla
-q,w,e,r - przelacznik kazdego swiatla
+3.Shadery
+q-i - przelacznik shaderów
+q-ConstPhong (rectangle)
+w-ConstBlinn (rectangle)
+e-GouraudBlinn
+r-GouraudPhong
+t-PhongBlinn
+y-Phong
+u-Static
+i-ConsPhong (triangle)
